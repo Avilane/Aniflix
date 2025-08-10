@@ -1,2 +1,0 @@
-# Aniflix
-StreamWeb
