@@ -424,6 +424,183 @@
             gap: 8px;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 30, 0.95);
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .modal-header {
+            position: relative;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .modal-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to top, rgba(20, 20, 30, 0.95), transparent);
+        }
+
+        .modal-header-content {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            z-index: 1;
+        }
+
+        .modal-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 15px;
+            color: #ddd;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-body h3 {
+            margin: 20px 0 15px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .modal-synopsis {
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        .episodes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .episode {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .episode:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .episode-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+
+        .episode-title {
+            font-size: 0.8rem;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Player Modal */
+        .player-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+        }
+
+        .player-content {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .player-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         /* Footer */
         footer {
             background: rgba(10, 10, 20, 0.95);
@@ -513,6 +690,10 @@
             .hero h2 {
                 font-size: 2.5rem;
             }
+
+            .modal-header {
+                height: 300px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -553,6 +734,10 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .modal-header h2 {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -571,6 +756,22 @@
             
             .anime-card .card-image {
                 height: 220px;
+            }
+
+            .modal-header {
+                height: 250px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .modal-meta {
+                font-size: 0.8rem;
+            }
+
+            .episodes-container {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             }
         }
     </style>
@@ -592,8 +793,8 @@
             <nav>
                 <ul>
                     <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
-                    <li><a href="#top-anime"><i class="fas fa-fire"></i> Populer</a></li>
-                    <li><a href="#season-anime"><i class="fas fa-calendar"></i> Musim Ini</a></li>
+                    <li><a href="#popular-anime"><i class="fas fa-fire"></i> Populer</a></li>
+                    <li><a href="#recent-anime"><i class="fas fa-history"></i> Terbaru</a></li>
                     <li><a href="#"><i class="fas fa-bookmark"></i> Favorit</a></li>
                 </ul>
             </nav>
@@ -613,8 +814,8 @@
                 <h2 id="hero-title">Memuat Anime Terpopuler...</h2>
                 <p id="hero-synopsis">Silakan tunggu sebentar...</p>
                 <div class="hero-buttons">
-                    <button class="hero-btn play-btn"><i class="fas fa-play"></i> Tonton Sekarang</button>
-                    <button class="hero-btn info-btn"><i class="fas fa-info-circle"></i> Detail Anime</button>
+                    <button class="hero-btn play-btn" id="hero-play-btn"><i class="fas fa-play"></i> Tonton Sekarang</button>
+                    <button class="hero-btn info-btn" id="hero-info-btn"><i class="fas fa-info-circle"></i> Detail Anime</button>
                 </div>
             </div>
         </section>
@@ -628,13 +829,13 @@
             <div class="anime-grid" id="search-results-container"></div>
         </section>
         
-        <!-- Top Anime -->
-        <h2 class="section-title" id="top-anime"><i class="fas fa-crown"></i> Anime Terpopuler</h2>
-        <div class="anime-grid" id="top-anime-container"></div>
+        <!-- Popular Anime -->
+        <h2 class="section-title" id="popular-anime"><i class="fas fa-fire"></i> Anime Populer</h2>
+        <div class="anime-grid" id="popular-anime-container"></div>
         
-        <!-- Current Season Anime -->
-        <h2 class="section-title" id="season-anime"><i class="fas fa-calendar-alt"></i> Anime Musim Ini</h2>
-        <div class="anime-grid" id="season-anime-container"></div>
+        <!-- Recent Anime -->
+        <h2 class="section-title" id="recent-anime"><i class="fas fa-history"></i> Episode Terbaru</h2>
+        <div class="anime-grid" id="recent-anime-container"></div>
         
         <!-- Loading Spinner -->
         <div class="loader" id="loader">
@@ -643,13 +844,41 @@
         </div>
     </main>
     
+    <!-- Anime Detail Modal -->
+    <div class="modal" id="anime-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+            <div class="modal-header" id="modal-header">
+                <div class="modal-header-content">
+                    <h2 id="modal-title">Memuat...</h2>
+                    <div class="modal-meta" id="modal-meta"></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h3>Sinopsis</h3>
+                <p class="modal-synopsis" id="modal-synopsis">Memuat deskripsi anime...</p>
+                
+                <h3>Episode</h3>
+                <div class="episodes-container" id="episodes-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Video Player Modal -->
+    <div class="player-modal" id="player-modal">
+        <div class="player-content">
+            <button class="player-close" id="player-close"><i class="fas fa-times"></i></button>
+            <div class="video-container" id="video-container"></div>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Tentang AniFlix</h3>
-                    <p>AniFlix adalah platform streaming anime menggunakan API Jikan (MyAnimeList) untuk menyajikan anime terbaru dan terpopuler secara gratis.</p>
+                    <p>AniFlix adalah platform streaming anime menggunakan API Consumet untuk menyajikan anime terbaru dan terpopuler secara gratis.</p>
                     <div class="social-icons">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -662,8 +891,8 @@
                     <h3>Navigasi</h3>
                     <ul>
                         <li><a href="#">Beranda</a></li>
-                        <li><a href="#top-anime">Anime Populer</a></li>
-                        <li><a href="#season-anime">Anime Musim Ini</a></li>
+                        <li><a href="#popular-anime">Anime Populer</a></li>
+                        <li><a href="#recent-anime">Episode Terbaru</a></li>
                         <li><a href="#">Genre</a></li>
                         <li><a href="#">Film Anime</a></li>
                     </ul>
@@ -693,31 +922,49 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 AniFlix. Hak Cipta Dilindungi. Data anime disediakan oleh Jikan API.</p>
+                <p>&copy; 2023 AniFlix. Hak Cipta Dilindungi. Data anime disediakan oleh Consumet API.</p>
                 <p>Website ini hanya untuk tujuan demonstrasi.</p>
             </div>
         </div>
     </footer>
     
     <script>
-        // API Configuration
-        const API_BASE_URL = 'https://api.jikan.moe/v4';
-        const TOP_ANIME_URL = `${API_BASE_URL}/top/anime`;
-        const SEASON_ANIME_URL = `${API_BASE_URL}/seasons/now`;
-        const SEARCH_ANIME_URL = `${API_BASE_URL}/anime`;
+        // API Configuration for Consumet
+        const API_BASE_URL = 'https://api.consumet.org/anime/gogoanime';
+        const POPULAR_ANIME_URL = `${API_BASE_URL}/top-airing`;
+        const RECENT_EPISODES_URL = `${API_BASE_URL}/recent-episodes`;
+        const ANIME_SEARCH_URL = `${API_BASE_URL}/`;
+        const ANIME_INFO_URL = `${API_BASE_URL}/info/`;
+        const WATCH_EPISODE_URL = `${API_BASE_URL}/watch/`;
         
         // DOM Elements
         const heroSection = document.getElementById('hero-section');
         const heroTitle = document.getElementById('hero-title');
         const heroSynopsis = document.getElementById('hero-synopsis');
-        const topAnimeContainer = document.getElementById('top-anime-container');
-        const seasonAnimeContainer = document.getElementById('season-anime-container');
+        const popularAnimeContainer = document.getElementById('popular-anime-container');
+        const recentAnimeContainer = document.getElementById('recent-anime-container');
         const searchResultsContainer = document.getElementById('search-results-container');
         const searchResultsSection = document.getElementById('search-results');
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
         const backButton = document.getElementById('back-button');
         const loader = document.getElementById('loader');
+        const heroPlayBtn = document.getElementById('hero-play-btn');
+        const heroInfoBtn = document.getElementById('hero-info-btn');
+        const animeModal = document.getElementById('anime-modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalHeader = document.getElementById('modal-header');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMeta = document.getElementById('modal-meta');
+        const modalSynopsis = document.getElementById('modal-synopsis');
+        const episodesContainer = document.getElementById('episodes-container');
+        const playerModal = document.getElementById('player-modal');
+        const playerClose = document.getElementById('player-close');
+        const videoContainer = document.getElementById('video-container');
+        
+        // State
+        let currentAnimeId = null;
+        let currentEpisodeId = null;
         
         // Show loading spinner
         function showLoader() {
@@ -738,31 +985,33 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                return data.data;
+                return data;
             } catch (error) {
                 console.error('Error fetching data:', error);
-                return [];
+                return { results: [] };
             } finally {
                 hideLoader();
             }
         }
         
-        // Display top anime in hero section
+        // Display hero anime
         async function displayHeroAnime() {
-            const topAnime = await fetchData(TOP_ANIME_URL);
-            if (topAnime.length > 0) {
-                const randomIndex = Math.floor(Math.random() * Math.min(5, topAnime.length));
-                const anime = topAnime[randomIndex];
+            const popularData = await fetchData(POPULAR_ANIME_URL);
+            if (popularData.results && popularData.results.length > 0) {
+                const anime = popularData.results[0];
+                currentAnimeId = anime.id;
                 
                 heroTitle.textContent = anime.title;
-                heroSynopsis.textContent = anime.synopsis ? 
-                    anime.synopsis.substring(0, 200) + '...' : 
-                    'Deskripsi tidak tersedia untuk anime ini.';
+                heroSynopsis.textContent = 'Klik tombol Detail untuk melihat sinopsis lengkap';
                 
                 // Set hero background
-                if (anime.images && anime.images.jpg && anime.images.jpg.large_image_url) {
-                    heroSection.style.backgroundImage = `url(${anime.images.jpg.large_image_url})`;
+                if (anime.image) {
+                    heroSection.style.backgroundImage = `url(${anime.image})`;
                 }
+                
+                // Set button actions
+                heroPlayBtn.onclick = () => playFirstEpisode(anime.id);
+                heroInfoBtn.onclick = () => showAnimeDetail(anime.id);
             }
         }
         
@@ -771,59 +1020,62 @@
             const card = document.createElement('div');
             card.className = 'anime-card';
             
-            let imageUrl = '';
-            if (anime.images && anime.images.jpg) {
-                imageUrl = anime.images.jpg.large_image_url || anime.images.jpg.image_url;
-            }
-            
-            const episodesText = anime.episodes ? `${anime.episodes} eps` : 'TBA';
-            
             card.innerHTML = `
-                <div class="card-image" style="background-image: url(${imageUrl || 'https://via.placeholder.com/300x400?text=No+Image'});"></div>
-                <div class="episode-badge">${episodesText}</div>
+                <div class="card-image" style="background-image: url(${anime.image || 'https://via.placeholder.com/300x400?text=No+Image'});"></div>
+                ${anime.episodeNumber ? `<div class="episode-badge">Eps ${anime.episodeNumber}</div>` : ''}
                 <div class="anime-info">
                     <h4>${anime.title}</h4>
                     <div class="meta">
                         <span>${anime.type || 'TV'}</span>
-                        <span class="rating"><i class="fas fa-star"></i> ${anime.score || 'N/A'}</span>
+                        <span class="rating"><i class="fas fa-star"></i> ${anime.rating || 'N/A'}</span>
                     </div>
                 </div>
             `;
             
             card.addEventListener('click', () => {
-                alert(`Anda memilih: ${anime.title}\n\nAplikasi ini hanya demonstrasi. Di aplikasi nyata, ini akan menampilkan detail anime.`);
+                if (anime.episodeId) {
+                    // For recent episodes
+                    playEpisode(anime.episodeId);
+                } else {
+                    // For other anime cards
+                    showAnimeDetail(anime.id);
+                }
             });
             
             return card;
         }
         
-        // Display top anime
-        async function displayTopAnime() {
-            const topAnime = await fetchData(TOP_ANIME_URL);
-            topAnimeContainer.innerHTML = '';
+        // Display popular anime
+        async function displayPopularAnime() {
+            const popularData = await fetchData(POPULAR_ANIME_URL);
+            popularAnimeContainer.innerHTML = '';
             
-            if (topAnime.length > 0) {
-                topAnime.slice(0, 8).forEach(anime => {
+            if (popularData.results && popularData.results.length > 0) {
+                popularData.results.slice(0, 8).forEach(anime => {
                     const card = createAnimeCard(anime);
-                    topAnimeContainer.appendChild(card);
+                    popularAnimeContainer.appendChild(card);
                 });
             } else {
-                topAnimeContainer.innerHTML = '<p>Gagal memuat anime populer. Silakan coba lagi nanti.</p>';
+                popularAnimeContainer.innerHTML = '<p>Gagal memuat anime populer. Silakan coba lagi nanti.</p>';
             }
         }
         
-        // Display current season anime
-        async function displaySeasonAnime() {
-            const seasonAnime = await fetchData(SEASON_ANIME_URL);
-            seasonAnimeContainer.innerHTML = '';
+        // Display recent episodes
+        async function displayRecentEpisodes() {
+            const recentData = await fetchData(RECENT_EPISODES_URL);
+            recentAnimeContainer.innerHTML = '';
             
-            if (seasonAnime.length > 0) {
-                seasonAnime.slice(0, 8).forEach(anime => {
-                    const card = createAnimeCard(anime);
-                    seasonAnimeContainer.appendChild(card);
+            if (recentData.results && recentData.results.length > 0) {
+                recentData.results.slice(0, 8).forEach(episode => {
+                    const card = createAnimeCard({
+                        ...episode,
+                        episodeNumber: episode.episodeNumber,
+                        episodeId: episode.id
+                    });
+                    recentAnimeContainer.appendChild(card);
                 });
             } else {
-                seasonAnimeContainer.innerHTML = '<p>Gagal memuat anime musim ini. Silakan coba lagi nanti.</p>';
+                recentAnimeContainer.innerHTML = '<p>Gagal memuat episode terbaru. Silakan coba lagi nanti.</p>';
             }
         }
         
@@ -831,8 +1083,8 @@
         async function searchAnime(query) {
             if (!query.trim()) return;
             
-            const url = `${SEARCH_ANIME_URL}?q=${encodeURIComponent(query)}&sfw`;
-            const searchResults = await fetchData(url);
+            const url = `${ANIME_SEARCH_URL}${encodeURIComponent(query)}`;
+            const searchData = await fetchData(url);
             
             // Hide main content, show search results
             document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
@@ -842,8 +1094,8 @@
             searchResultsSection.style.display = 'block';
             searchResultsContainer.innerHTML = '';
             
-            if (searchResults.length > 0) {
-                searchResults.forEach(anime => {
+            if (searchData.results && searchData.results.length > 0) {
+                searchData.results.forEach(anime => {
                     const card = createAnimeCard(anime);
                     searchResultsContainer.appendChild(card);
                 });
@@ -861,6 +1113,118 @@
             searchInput.value = '';
         }
         
+        // Show anime detail modal
+        async function showAnimeDetail(animeId) {
+            currentAnimeId = animeId;
+            const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
+            
+            if (!animeInfo) {
+                alert('Gagal memuat detail anime. Silakan coba lagi.');
+                return;
+            }
+            
+            // Set modal content
+            modalTitle.textContent = animeInfo.title;
+            modalSynopsis.textContent = animeInfo.description || 'Deskripsi tidak tersedia.';
+            
+            // Set header background
+            if (animeInfo.image) {
+                modalHeader.style.backgroundImage = `url(${animeInfo.image})`;
+            }
+            
+            // Set metadata
+            modalMeta.innerHTML = `
+                <span>${animeInfo.type || 'TV'}</span>
+                <span><i class="fas fa-star"></i> ${animeInfo.rating || 'N/A'}</span>
+                <span><i class="fas fa-calendar"></i> ${animeInfo.releaseDate || 'Tidak diketahui'}</span>
+                <span><i class="fas fa-tv"></i> ${animeInfo.totalEpisodes || '?'} Episode</span>
+                <span><i class="fas fa-tags"></i> ${animeInfo.genres?.join(', ') || 'Tidak diketahui'}</span>
+            `;
+            
+            // Add episodes
+            episodesContainer.innerHTML = '';
+            if (animeInfo.episodes && animeInfo.episodes.length > 0) {
+                animeInfo.episodes.reverse().forEach(ep => {
+                    const episode = document.createElement('div');
+                    episode.className = 'episode';
+                    episode.innerHTML = `
+                        <div class="episode-number">${ep.number}</div>
+                        <div class="episode-title">${ep.title || 'Episode ' + ep.number}</div>
+                    `;
+                    episode.addEventListener('click', () => playEpisode(ep.id));
+                    episodesContainer.appendChild(episode);
+                });
+            } else {
+                episodesContainer.innerHTML = '<p>Episode tidak tersedia.</p>';
+            }
+            
+            // Show modal
+            animeModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Play first episode of an anime
+        async function playFirstEpisode(animeId) {
+            const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
+            if (!animeInfo || !animeInfo.episodes || animeInfo.episodes.length === 0) {
+                alert('Episode tidak ditemukan.');
+                return;
+            }
+            
+            // Play the first episode
+            playEpisode(animeInfo.episodes[0].id);
+        }
+        
+        // Play a specific episode
+        async function playEpisode(episodeId) {
+            currentEpisodeId = episodeId;
+            const episodeData = await fetchData(`${WATCH_EPISODE_URL}${episodeId}`);
+            
+            if (!episodeData || !episodeData.sources || episodeData.sources.length === 0) {
+                alert('Sumber video tidak ditemukan.');
+                return;
+            }
+            
+            // Find the best quality video source
+            const videoSource = episodeData.sources.find(source => 
+                source.quality === '1080p' || source.quality === '720p' || source.quality === 'default'
+            ) || episodeData.sources[0];
+            
+            // Set up video player
+            videoContainer.innerHTML = `
+                <iframe src="${videoSource.url}" allowfullscreen></iframe>
+            `;
+            
+            // Show player modal
+            playerModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close modals
+        modalClose.addEventListener('click', () => {
+            animeModal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+        
+        playerClose.addEventListener('click', () => {
+            playerModal.style.display = 'none';
+            document.body.style.overflow = '';
+            videoContainer.innerHTML = '';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === animeModal) {
+                animeModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            if (e.target === playerModal) {
+                playerModal.style.display = 'none';
+                document.body.style.overflow = '';
+                videoContainer.innerHTML = '';
+            }
+        });
+        
         // Event Listeners
         searchBtn.addEventListener('click', () => {
             searchAnime(searchInput.value);
@@ -877,8 +1241,8 @@
         // Initialize the page
         async function init() {
             await displayHeroAnime();
-            await displayTopAnime();
-            await displaySeasonAnime();
+            await displayPopularAnime();
+            await displayRecentEpisodes();
         }
         
         // Start the application
