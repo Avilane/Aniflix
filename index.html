@@ -929,324 +929,324 @@
     </footer>
     
     <script>
-        // API Configuration for Consumet
-        const API_BASE_URL = 'https://api.consumet.org/anime/gogoanime';
-        const POPULAR_ANIME_URL = `${API_BASE_URL}/top-airing`;
-        const RECENT_EPISODES_URL = `${API_BASE_URL}/recent-episodes`;
-        const ANIME_SEARCH_URL = `${API_BASE_URL}/`;
-        const ANIME_INFO_URL = `${API_BASE_URL}/info/`;
-        const WATCH_EPISODE_URL = `${API_BASE_URL}/watch/`;
+     // API Configuration for Consumet
+const API_BASE_URL = 'https://api.consumet.org/anime/gogoanime';
+const POPULAR_ANIME_URL = `${API_BASE_URL}/top-airing`;
+const RECENT_EPISODES_URL = `${API_BASE_URL}/recent-episodes`;
+const ANIME_SEARCH_URL = `${API_BASE_URL}/`;
+const ANIME_INFO_URL = `${API_BASE_URL}/info/`;
+const WATCH_EPISODE_URL = `${API_BASE_URL}/watch/`;
+
+// DOM Elements
+const heroSection = document.getElementById('hero-section');
+const heroTitle = document.getElementById('hero-title');
+const heroSynopsis = document.getElementById('hero-synopsis');
+const popularAnimeContainer = document.getElementById('popular-anime-container');
+const recentAnimeContainer = document.getElementById('recent-anime-container');
+const searchResultsContainer = document.getElementById('search-results-container');
+const searchResultsSection = document.getElementById('search-results');
+const searchInput = document.getElementById('search-input');
+const searchBtn = document.getElementById('search-btn');
+const backButton = document.getElementById('back-button');
+const loader = document.getElementById('loader');
+const heroPlayBtn = document.getElementById('hero-play-btn');
+const heroInfoBtn = document.getElementById('hero-info-btn');
+const animeModal = document.getElementById('anime-modal');
+const modalClose = document.getElementById('modal-close');
+const modalHeader = document.getElementById('modal-header');
+const modalTitle = document.getElementById('modal-title');
+const modalMeta = document.getElementById('modal-meta');
+const modalSynopsis = document.getElementById('modal-synopsis');
+const episodesContainer = document.getElementById('episodes-container');
+const playerModal = document.getElementById('player-modal');
+const playerClose = document.getElementById('player-close');
+const videoContainer = document.getElementById('video-container');
+
+// State
+let currentAnimeId = null;
+let currentEpisodeId = null;
+
+// Show loading spinner
+function showLoader() {
+    loader.style.display = 'block';
+}
+
+// Hide loading spinner
+function hideLoader() {
+    loader.style.display = 'none';
+}
+
+// Fetch data from API
+async function fetchData(url) {
+    try {
+        showLoader();
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return { results: [] };
+    } finally {
+        hideLoader();
+    }
+}
+
+// Display hero anime
+async function displayHeroAnime() {
+    const popularData = await fetchData(POPULAR_ANIME_URL);
+    if (popularData.results && popularData.results.length > 0) {
+        const anime = popularData.results[0];
+        currentAnimeId = anime.id;
         
-        // DOM Elements
-        const heroSection = document.getElementById('hero-section');
-        const heroTitle = document.getElementById('hero-title');
-        const heroSynopsis = document.getElementById('hero-synopsis');
-        const popularAnimeContainer = document.getElementById('popular-anime-container');
-        const recentAnimeContainer = document.getElementById('recent-anime-container');
-        const searchResultsContainer = document.getElementById('search-results-container');
-        const searchResultsSection = document.getElementById('search-results');
-        const searchInput = document.getElementById('search-input');
-        const searchBtn = document.getElementById('search-btn');
-        const backButton = document.getElementById('back-button');
-        const loader = document.getElementById('loader');
-        const heroPlayBtn = document.getElementById('hero-play-btn');
-        const heroInfoBtn = document.getElementById('hero-info-btn');
-        const animeModal = document.getElementById('anime-modal');
-        const modalClose = document.getElementById('modal-close');
-        const modalHeader = document.getElementById('modal-header');
-        const modalTitle = document.getElementById('modal-title');
-        const modalMeta = document.getElementById('modal-meta');
-        const modalSynopsis = document.getElementById('modal-synopsis');
-        const episodesContainer = document.getElementById('episodes-container');
-        const playerModal = document.getElementById('player-modal');
-        const playerClose = document.getElementById('player-close');
-        const videoContainer = document.getElementById('video-container');
+        heroTitle.textContent = anime.title;
+        heroSynopsis.textContent = 'Klik tombol Detail untuk melihat sinopsis lengkap';
         
-        // State
-        let currentAnimeId = null;
-        let currentEpisodeId = null;
-        
-        // Show loading spinner
-        function showLoader() {
-            loader.style.display = 'block';
+        // Set hero background
+        if (anime.image) {
+            heroSection.style.backgroundImage = `url(${anime.image})`;
         }
         
-        // Hide loading spinner
-        function hideLoader() {
-            loader.style.display = 'none';
+        // Set button actions
+        heroPlayBtn.onclick = () => playFirstEpisode(anime.id);
+        heroInfoBtn.onclick = () => showAnimeDetail(anime.id);
+    }
+}
+
+// Create anime card
+function createAnimeCard(anime) {
+    const card = document.createElement('div');
+    card.className = 'anime-card';
+    
+    card.innerHTML = `
+        <div class="card-image" style="background-image: url(${anime.image || 'https://via.placeholder.com/300x400?text=No+Image'});"></div>
+        ${anime.episodeNumber ? `<div class="episode-badge">Eps ${anime.episodeNumber}</div>` : ''}
+        <div class="anime-info">
+            <h4>${anime.title}</h4>
+            <div class="meta">
+                <span>${anime.type || 'TV'}</span>
+                <span class="rating"><i class="fas fa-star"></i> ${anime.rating || 'N/A'}</span>
+            </div>
+        </div>
+    `;
+    
+    card.addEventListener('click', () => {
+        if (anime.episodeId) {
+            // For recent episodes
+            playEpisode(anime.episodeId);
+        } else {
+            // For other anime cards
+            showAnimeDetail(anime.id);
         }
-        
-        // Fetch data from API
-        async function fetchData(url) {
-            try {
-                showLoader();
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                return { results: [] };
-            } finally {
-                hideLoader();
-            }
-        }
-        
-        // Display hero anime
-        async function displayHeroAnime() {
-            const popularData = await fetchData(POPULAR_ANIME_URL);
-            if (popularData.results && popularData.results.length > 0) {
-                const anime = popularData.results[0];
-                currentAnimeId = anime.id;
-                
-                heroTitle.textContent = anime.title;
-                heroSynopsis.textContent = 'Klik tombol Detail untuk melihat sinopsis lengkap';
-                
-                // Set hero background
-                if (anime.image) {
-                    heroSection.style.backgroundImage = `url(${anime.image})`;
-                }
-                
-                // Set button actions
-                heroPlayBtn.onclick = () => playFirstEpisode(anime.id);
-                heroInfoBtn.onclick = () => showAnimeDetail(anime.id);
-            }
-        }
-        
-        // Create anime card
-        function createAnimeCard(anime) {
-            const card = document.createElement('div');
-            card.className = 'anime-card';
-            
-            card.innerHTML = `
-                <div class="card-image" style="background-image: url(${anime.image || 'https://via.placeholder.com/300x400?text=No+Image'});"></div>
-                ${anime.episodeNumber ? `<div class="episode-badge">Eps ${anime.episodeNumber}</div>` : ''}
-                <div class="anime-info">
-                    <h4>${anime.title}</h4>
-                    <div class="meta">
-                        <span>${anime.type || 'TV'}</span>
-                        <span class="rating"><i class="fas fa-star"></i> ${anime.rating || 'N/A'}</span>
-                    </div>
-                </div>
-            `;
-            
-            card.addEventListener('click', () => {
-                if (anime.episodeId) {
-                    // For recent episodes
-                    playEpisode(anime.episodeId);
-                } else {
-                    // For other anime cards
-                    showAnimeDetail(anime.id);
-                }
+    });
+    
+    return card;
+}
+
+// Display popular anime
+async function displayPopularAnime() {
+    const popularData = await fetchData(POPULAR_ANIME_URL);
+    popularAnimeContainer.innerHTML = '';
+    
+    if (popularData.results && popularData.results.length > 0) {
+        popularData.results.slice(0, 8).forEach(anime => {
+            const card = createAnimeCard(anime);
+            popularAnimeContainer.appendChild(card);
+        });
+    } else {
+        popularAnimeContainer.innerHTML = '<p>Gagal memuat anime populer. Silakan coba lagi nanti.</p>';
+    }
+}
+
+// Display recent episodes
+async function displayRecentEpisodes() {
+    const recentData = await fetchData(RECENT_EPISODES_URL);
+    recentAnimeContainer.innerHTML = '';
+    
+    if (recentData.results && recentData.results.length > 0) {
+        recentData.results.slice(0, 8).forEach(episode => {
+            const card = createAnimeCard({
+                ...episode,
+                episodeNumber: episode.episodeNumber,
+                episodeId: episode.id
             });
-            
-            return card;
-        }
-        
-        // Display popular anime
-        async function displayPopularAnime() {
-            const popularData = await fetchData(POPULAR_ANIME_URL);
-            popularAnimeContainer.innerHTML = '';
-            
-            if (popularData.results && popularData.results.length > 0) {
-                popularData.results.slice(0, 8).forEach(anime => {
-                    const card = createAnimeCard(anime);
-                    popularAnimeContainer.appendChild(card);
-                });
-            } else {
-                popularAnimeContainer.innerHTML = '<p>Gagal memuat anime populer. Silakan coba lagi nanti.</p>';
-            }
-        }
-        
-        // Display recent episodes
-        async function displayRecentEpisodes() {
-            const recentData = await fetchData(RECENT_EPISODES_URL);
-            recentAnimeContainer.innerHTML = '';
-            
-            if (recentData.results && recentData.results.length > 0) {
-                recentData.results.slice(0, 8).forEach(episode => {
-                    const card = createAnimeCard({
-                        ...episode,
-                        episodeNumber: episode.episodeNumber,
-                        episodeId: episode.id
-                    });
-                    recentAnimeContainer.appendChild(card);
-                });
-            } else {
-                recentAnimeContainer.innerHTML = '<p>Gagal memuat episode terbaru. Silakan coba lagi nanti.</p>';
-            }
-        }
-        
-        // Search anime
-        async function searchAnime(query) {
-            if (!query.trim()) return;
-            
-            const url = `${ANIME_SEARCH_URL}${encodeURIComponent(query)}`;
-            const searchData = await fetchData(url);
-            
-            // Hide main content, show search results
-            document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            searchResultsSection.style.display = 'block';
-            searchResultsContainer.innerHTML = '';
-            
-            if (searchData.results && searchData.results.length > 0) {
-                searchData.results.forEach(anime => {
-                    const card = createAnimeCard(anime);
-                    searchResultsContainer.appendChild(card);
-                });
-            } else {
-                searchResultsContainer.innerHTML = '<p>Tidak ada hasil ditemukan. Coba kata kunci lain.</p>';
-            }
-        }
-        
-        // Back to main view
-        function backToMain() {
-            searchResultsSection.style.display = 'none';
-            document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
-                el.style.display = '';
-            });
-            searchInput.value = '';
-        }
-        
-        // Show anime detail modal
-        async function showAnimeDetail(animeId) {
-            currentAnimeId = animeId;
-            const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
-            
-            if (!animeInfo) {
-                alert('Gagal memuat detail anime. Silakan coba lagi.');
-                return;
-            }
-            
-            // Set modal content
-            modalTitle.textContent = animeInfo.title;
-            modalSynopsis.textContent = animeInfo.description || 'Deskripsi tidak tersedia.';
-            
-            // Set header background
-            if (animeInfo.image) {
-                modalHeader.style.backgroundImage = `url(${animeInfo.image})`;
-            }
-            
-            // Set metadata
-            modalMeta.innerHTML = `
-                <span>${animeInfo.type || 'TV'}</span>
-                <span><i class="fas fa-star"></i> ${animeInfo.rating || 'N/A'}</span>
-                <span><i class="fas fa-calendar"></i> ${animeInfo.releaseDate || 'Tidak diketahui'}</span>
-                <span><i class="fas fa-tv"></i> ${animeInfo.totalEpisodes || '?'} Episode</span>
-                <span><i class="fas fa-tags"></i> ${animeInfo.genres?.join(', ') || 'Tidak diketahui'}</span>
+            recentAnimeContainer.appendChild(card);
+        });
+    } else {
+        recentAnimeContainer.innerHTML = '<p>Gagal memuat episode terbaru. Silakan coba lagi nanti.</p>';
+    }
+}
+
+// Search anime
+async function searchAnime(query) {
+    if (!query.trim()) return;
+    
+    const url = `${ANIME_SEARCH_URL}${encodeURIComponent(query)}`;
+    const searchData = await fetchData(url);
+    
+    // Hide main content, show search results
+    document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    searchResultsSection.style.display = 'block';
+    searchResultsContainer.innerHTML = '';
+    
+    if (searchData.results && searchData.results.length > 0) {
+        searchData.results.forEach(anime => {
+            const card = createAnimeCard(anime);
+            searchResultsContainer.appendChild(card);
+        });
+    } else {
+        searchResultsContainer.innerHTML = '<p>Tidak ada hasil ditemukan. Coba kata kunci lain.</p>';
+    }
+}
+
+// Back to main view
+function backToMain() {
+    searchResultsSection.style.display = 'none';
+    document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
+        el.style.display = '';
+    });
+    searchInput.value = '';
+}
+
+// Show anime detail modal
+async function showAnimeDetail(animeId) {
+    currentAnimeId = animeId;
+    const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
+    
+    if (!animeInfo) {
+        alert('Gagal memuat detail anime. Silakan coba lagi.');
+        return;
+    }
+    
+    // Set modal content
+    modalTitle.textContent = animeInfo.title;
+    modalSynopsis.textContent = animeInfo.description || 'Deskripsi tidak tersedia.';
+    
+    // Set header background
+    if (animeInfo.image) {
+        modalHeader.style.backgroundImage = `url(${animeInfo.image})`;
+    }
+    
+    // Set metadata
+    modalMeta.innerHTML = `
+        <span>${animeInfo.type || 'TV'}</span>
+        <span><i class="fas fa-star"></i> ${animeInfo.rating || 'N/A'}</span>
+        <span><i class="fas fa-calendar"></i> ${animeInfo.releaseDate || 'Tidak diketahui'}</span>
+        <span><i class="fas fa-tv"></i> ${animeInfo.totalEpisodes || '?'} Episode</span>
+        <span><i class="fas fa-tags"></i> ${animeInfo.genres?.join(', ') || 'Tidak diketahui'}</span>
+    `;
+    
+    // Add episodes
+    episodesContainer.innerHTML = '';
+    if (animeInfo.episodes && animeInfo.episodes.length > 0) {
+        animeInfo.episodes.reverse().forEach(ep => {
+            const episode = document.createElement('div');
+            episode.className = 'episode';
+            episode.innerHTML = `
+                <div class="episode-number">${ep.number}</div>
+                <div class="episode-title">${ep.title || 'Episode ' + ep.number}</div>
             `;
-            
-            // Add episodes
-            episodesContainer.innerHTML = '';
-            if (animeInfo.episodes && animeInfo.episodes.length > 0) {
-                animeInfo.episodes.reverse().forEach(ep => {
-                    const episode = document.createElement('div');
-                    episode.className = 'episode';
-                    episode.innerHTML = `
-                        <div class="episode-number">${ep.number}</div>
-                        <div class="episode-title">${ep.title || 'Episode ' + ep.number}</div>
-                    `;
-                    episode.addEventListener('click', () => playEpisode(ep.id));
-                    episodesContainer.appendChild(episode);
-                });
-            } else {
-                episodesContainer.innerHTML = '<p>Episode tidak tersedia.</p>';
-            }
-            
-            // Show modal
-            animeModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Play first episode of an anime
-        async function playFirstEpisode(animeId) {
-            const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
-            if (!animeInfo || !animeInfo.episodes || animeInfo.episodes.length === 0) {
-                alert('Episode tidak ditemukan.');
-                return;
-            }
-            
-            // Play the first episode
-            playEpisode(animeInfo.episodes[0].id);
-        }
-        
-        // Play a specific episode
-        async function playEpisode(episodeId) {
-            currentEpisodeId = episodeId;
-            const episodeData = await fetchData(`${WATCH_EPISODE_URL}${episodeId}`);
-            
-            if (!episodeData || !episodeData.sources || episodeData.sources.length === 0) {
-                alert('Sumber video tidak ditemukan.');
-                return;
-            }
-            
-            // Find the best quality video source
-            const videoSource = episodeData.sources.find(source => 
-                source.quality === '1080p' || source.quality === '720p' || source.quality === 'default'
-            ) || episodeData.sources[0];
-            
-            // Set up video player
-            videoContainer.innerHTML = `
-                <iframe src="${videoSource.url}" allowfullscreen></iframe>
-            `;
-            
-            // Show player modal
-            playerModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Close modals
-        modalClose.addEventListener('click', () => {
-            animeModal.style.display = 'none';
-            document.body.style.overflow = '';
+            episode.addEventListener('click', () => playEpisode(ep.id));
+            episodesContainer.appendChild(episode);
         });
-        
-        playerClose.addEventListener('click', () => {
-            playerModal.style.display = 'none';
-            document.body.style.overflow = '';
-            videoContainer.innerHTML = '';
-        });
-        
-        // Close modals when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === animeModal) {
-                animeModal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-            if (e.target === playerModal) {
-                playerModal.style.display = 'none';
-                document.body.style.overflow = '';
-                videoContainer.innerHTML = '';
-            }
-        });
-        
-        // Event Listeners
-        searchBtn.addEventListener('click', () => {
-            searchAnime(searchInput.value);
-        });
-        
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchAnime(searchInput.value);
-            }
-        });
-        
-        backButton.addEventListener('click', backToMain);
-        
-        // Initialize the page
-        async function init() {
-            await displayHeroAnime();
-            await displayPopularAnime();
-            await displayRecentEpisodes();
-        }
-        
-        // Start the application
-        init();
+    } else {
+        episodesContainer.innerHTML = '<p>Episode tidak tersedia.</p>';
+    }
+    
+    // Show modal
+    animeModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// Play first episode of an anime
+async function playFirstEpisode(animeId) {
+    const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
+    if (!animeInfo || !animeInfo.episodes || animeInfo.episodes.length === 0) {
+        alert('Episode tidak ditemukan.');
+        return;
+    }
+    
+    // Play the first episode
+    playEpisode(animeInfo.episodes[0].id);
+}
+
+// Play a specific episode
+async function playEpisode(episodeId) {
+    currentEpisodeId = episodeId;
+    const episodeData = await fetchData(`${WATCH_EPISODE_URL}${episodeId}`);
+    
+    if (!episodeData || !episodeData.sources || episodeData.sources.length === 0) {
+        alert('Sumber video tidak ditemukan.');
+        return;
+    }
+    
+    // Find the best quality video source
+    const videoSource = episodeData.sources.find(source => 
+        source.quality === '1080p' || source.quality === '720p' || source.quality === 'default'
+    ) || episodeData.sources[0];
+    
+    // Set up video player
+    videoContainer.innerHTML = `
+        <iframe src="${videoSource.url}" allowfullscreen></iframe>
+    `;
+    
+    // Show player modal
+    playerModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// Close modals
+modalClose.addEventListener('click', () => {
+    animeModal.style.display = 'none';
+    document.body.style.overflow = '';
+});
+
+playerClose.addEventListener('click', () => {
+    playerModal.style.display = 'none';
+    document.body.style.overflow = '';
+    videoContainer.innerHTML = '';
+});
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === animeModal) {
+        animeModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    if (e.target === playerModal) {
+        playerModal.style.display = 'none';
+        document.body.style.overflow = '';
+        videoContainer.innerHTML = '';
+    }
+});
+
+// Event Listeners
+searchBtn.addEventListener('click', () => {
+    searchAnime(searchInput.value);
+});
+
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        searchAnime(searchInput.value);
+    }
+});
+
+backButton.addEventListener('click', backToMain);
+
+// Initialize the page
+async function init() {
+    await displayHeroAnime();
+    await displayPopularAnime();
+    await displayRecentEpisodes();
+}
+
+// Start the application
+init();
     </script>
 </body>
 </html>
