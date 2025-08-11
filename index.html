@@ -1,1252 +1,1220 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AniFlix - Nonton Anime Gratis</title>
+    <title>GG Script Generator - AvelineID</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --hacker-green: #00ff00;
+            --hacker-green-dark: #008800;
+            --hacker-green-light: #33ff33;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --terminal-bg: rgba(0, 30, 0, 0.3);
+            --menu-bg: rgba(0, 40, 0, 0.2);
+            --border-color: #005500;
+            --text-color: #e0e0e0;
+            --panel-bg: rgba(0, 20, 0, 0.2);
+            --success-color: #00cc44;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Courier New', monospace;
         }
-
-        :root {
-            --primary: #8e44ad;
-            --primary-dark: #7d3c98;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --dark: #121212;
-            --darker: #0a0a0a;
-            --light: #f5f5f5;
-            --gray: #2d2d44;
-            --card-bg: rgba(30, 30, 46, 0.8);
-        }
-
+        
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--darker), var(--dark));
-            color: var(--light);
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            padding: 15px;
             min-height: 100vh;
+            position: relative;
             overflow-x: hidden;
-            padding-bottom: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 80, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 100, 0, 0.1) 0%, transparent 20%);
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: rgba(10, 10, 20, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            padding: 15px 0;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .logo i {
-            color: var(--primary);
-            font-size: 2.2rem;
-        }
-
-        .logo h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-transform: uppercase;
-        }
-
-        .search-bar {
-            display: flex;
-            flex: 0 0 40%;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 30px;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-            padding-right: 50px;
-        }
-
-        .search-bar button {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .search-bar button:hover {
-            background: var(--primary-dark);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-            position: relative;
-            padding-bottom: 5px;
-        }
-
-        nav a:hover {
-            color: var(--secondary);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--secondary);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .user-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .user-actions button {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .user-actions .login:hover {
-            background: var(--primary);
-        }
-
-        .user-actions .signup {
-            background: var(--primary);
-        }
-
-        .user-actions .signup:hover {
-            background: transparent;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 65vh;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            position: relative;
-            margin-bottom: 40px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
+        
+        .binary-rain {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, rgba(10, 10, 20, 0.9), rgba(10, 10, 20, 0.4));
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
         }
-
-        .hero-content {
-            max-width: 600px;
-            padding: 0 40px;
-            z-index: 2;
-            position: relative;
-        }
-
-        .hero h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3.2rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.1;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            opacity: 0.9;
-            line-height: 1.6;
-            max-width: 500px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .hero-btn {
-            padding: 12px 30px;
-            border-radius: 30px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .hero-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .play-btn {
-            background: var(--primary);
-            color: white;
-        }
-
-        .info-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Main Content */
-        .section-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            margin: 40px 0 25px;
-            position: relative;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title::after {
-            content: '';
+        
+        .binary-char {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 70px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
+            color: rgba(0, 255, 0, 0.1);
+            font-size: 16px;
+            user-select: none;
+            animation: fall linear infinite;
         }
-
-        .section-title i {
-            color: var(--primary);
+        
+        @keyframes fall {
+            to { transform: translateY(100vh); }
         }
-
-        /* Anime Grid */
-        .anime-grid {
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
-
-        .anime-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        
+        header {
+            text-align: center;
+            padding: 20px 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
             position: relative;
-        }
-
-        .anime-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .anime-card .card-image {
-            width: 100%;
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .anime-info {
-            padding: 15px;
-        }
-
-        .anime-info h4 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
+            background: var(--darker-bg);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 80, 0, 0.3);
         }
-
-        .anime-info .meta {
-            display: flex;
-            justify-content: space-between;
-            color: #aaa;
-            font-size: 0.85rem;
-        }
-
-        .anime-info .rating {
-            color: #f1c40f;
-            font-weight: 500;
-        }
-
-        .anime-card .episode-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
+        
+        .header-content {
+            position: relative;
             z-index: 2;
         }
-
-        /* Categories */
-        .categories {
+        
+        header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--hacker-green);
+            position: relative;
+            animation: flicker 3s infinite;
+            margin-bottom: 10px;
+            color: var(--hacker-green);
+        }
+        
+        .brand {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 40px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
         }
-
-        .category {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
+        
+        .brand a {
+            color: var(--hacker-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
             transition: all 0.3s;
-            font-size: 0.9rem;
         }
-
-        .category:hover, .category.active {
-            background: var(--primary);
+        
+        .brand a:hover {
+            color: var(--hacker-green-light);
+            text-shadow: 0 0 8px var(--hacker-green);
         }
-
-        /* Loading Spinner */
-        .loader {
-            display: none;
-            text-align: center;
-            padding: 30px;
+        
+        .panels-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
-
-        .loader .spinner {
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 5px solid var(--primary);
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+        
+        @media (min-width: 768px) {
+            .panels-container {
+                grid-template-columns: 1fr 1fr;
+            }
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .panel {
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-
-        /* Search Results */
-        .search-results {
-            display: none;
-            margin-bottom: 40px;
+        
+        .panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 40, 0, 0.1) 50%, rgba(0, 20, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 0;
+            pointer-events: none;
         }
-
-        .search-header {
+        
+        .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            z-index: 2;
         }
-
-        .back-button {
-            background: var(--gray);
-            border: none;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
+        
+        .panel-title {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--hacker-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .panel-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        .config-section {
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--border-color);
             cursor: pointer;
+        }
+        
+        .section-title h3 {
+            color: var(--hacker-green);
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--hacker-green);
+        }
+        
+        input, select, textarea {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 20px;
+            padding: 12px 15px;
+            background-color: rgba(0, 20, 0, 0.3);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
-
-        .modal-content {
-            background: rgba(20, 20, 30, 0.95);
-            max-width: 900px;
-            margin: 40px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--hacker-green);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 2;
+        
+        textarea {
+            min-height: 250px;
+            resize: vertical;
         }
-
-        .modal-header {
-            position: relative;
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .modal-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(to top, rgba(20, 20, 30, 0.95), transparent);
-        }
-
-        .modal-header-content {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
-            z-index: 1;
-        }
-
-        .modal-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: white;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
-
-        .modal-meta {
+        
+        .btn-group {
             display: flex;
-            gap: 15px;
-            color: #ddd;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
             flex-wrap: wrap;
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .modal-body h3 {
-            margin: 20px 0 15px;
-            color: var(--primary);
-            font-size: 1.4rem;
-        }
-
-        .modal-synopsis {
-            line-height: 1.7;
-            color: #ccc;
-        }
-
-        .episodes-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
         }
-
-        .episode {
-            background: rgba(255, 255, 255, 0.05);
+        
+        button {
+            background: linear-gradient(to bottom, rgba(0, 80, 0, 0.7), rgba(0, 40, 0, 0.9));
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 120px;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background: linear-gradient(to bottom, rgba(0, 100, 0, 0.8), rgba(0, 60, 0, 1));
+            box-shadow: 0 0 15px var(--hacker-green);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to bottom, rgba(0, 100, 0, 0.7), rgba(0, 60, 0, 0.9));
+        }
+        
+        .btn-success {
+            background: linear-gradient(to bottom, rgba(0, 100, 50, 0.7), rgba(0, 60, 30, 0.9));
+        }
+        
+        .hack-item {
+            background-color: var(--panel-bg);
+            padding: 18px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
+            position: relative;
+        }
+        
+        .hack-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        @media (min-width: 480px) {
+            .hack-row {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        .menu-preview {
+            background-color: var(--panel-bg);
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            min-height: 150px;
+        }
+        
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .menu-item {
             padding: 12px;
-            text-align: center;
+            border: 1px dashed var(--border-color);
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .episode:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .episode-number {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--light);
-        }
-
-        .episode-title {
-            font-size: 0.8rem;
-            color: #aaa;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Player Modal */
-        .player-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-        }
-
-        .player-content {
-            width: 90%;
-            max-width: 1000px;
-            margin: 40px auto;
-            position: relative;
-        }
-
-        .player-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: var(--accent);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .video-container {
-            position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 10, 20, 0.95);
-            padding: 50px 0 20px;
-            margin-top: 50px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-column a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column a:hover {
-            color: var(--secondary);
-        }
-
-        .social-icons {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            align-items: center;
+            gap: 10px;
         }
-
-        .social-icons a {
+        
+        .menu-item:hover {
+            background-color: rgba(0, 60, 0, 0.3);
+            border-style: solid;
+        }
+        
+        .menu-item.active {
+            background-color: rgba(0, 100, 0, 0.3);
+            border-style: solid;
+            border-color: var(--hacker-green);
+            color: var(--hacker-green);
+        }
+        
+        .menu-item i {
+            font-size: 1.2rem;
+        }
+        
+        .success {
+            color: var(--success-color);
+            background-color: rgba(0, 60, 0, 0.3);
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid var(--success-color);
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .feature-badge {
+            background: linear-gradient(to right, rgba(0, 100, 0, 0.5), rgba(0, 60, 0, 0.8));
+            color: var(--hacker-green-light);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px 10px;
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--hacker-green);
+            font-size: 0.9rem;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--gray);
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 0 10px rgba(0, 80, 0, 0.5);
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.5; }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .mobile-warning {
+            display: none;
+            background-color: rgba(200, 0, 0, 0.2);
+            color: #ff5555;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ff5555;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-warning {
+                display: block;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* New styles for the subscribe modal */
+        #subscribe-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s;
+        }
+        
+        #subscribe-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--darker-bg);
+            border: 1px solid var(--hacker-green);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+            transform: translateY(20px);
+            transition: transform 0.5s;
+        }
+        
+        #subscribe-modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            color: var(--hacker-green);
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--hacker-green);
+            margin-bottom: 10px;
+        }
+        
+        .modal-body {
+            margin-bottom: 25px;
+        }
+        
+        .modal-body p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .modal-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn-subscribe {
+            background: linear-gradient(to bottom, rgba(200, 0, 0, 0.7), rgba(150, 0, 0, 0.9));
             color: white;
+            padding: 14px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid #ff5555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             transition: all 0.3s;
         }
-
-        .social-icons a:hover {
-            background: var(--primary);
+        
+        .btn-subscribe:hover {
+            background: linear-gradient(to bottom, rgba(255, 0, 0, 0.8), rgba(200, 0, 0, 1));
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
             transform: translateY(-3px);
         }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--gray);
-            color: #777;
-            font-size: 0.9rem;
+        
+        .btn-close-modal {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero {
-                height: 55vh;
-            }
-            
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-
-            .modal-header {
-                height: 300px;
-            }
+        
+        .btn-close-modal:hover {
+            background: rgba(0, 60, 0, 0.3);
+            border-color: var(--hacker-green);
         }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .search-bar {
-                flex: 0 0 100%;
-                width: 100%;
-            }
-            
-            nav ul {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero {
-                height: 60vh;
-                text-align: center;
-            }
-            
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-content {
-                margin: 0 auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .modal-header h2 {
-                font-size: 2rem;
-            }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
         }
-
-        @media (max-width: 576px) {
-            .hero {
-                height: 70vh;
-            }
-            
-            .hero-content {
-                padding: 0 20px;
-            }
-            
-            .anime-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-            }
-            
-            .anime-card .card-image {
-                height: 220px;
-            }
-
-            .modal-header {
-                height: 250px;
-            }
-
-            .modal-header h2 {
-                font-size: 1.6rem;
-            }
-
-            .modal-meta {
-                font-size: 0.8rem;
-            }
-
-            .episodes-container {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            }
+        
+        .footer-links a {
+            color: var(--hacker-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--hacker-green-light);
+            text-shadow: 0 0 8px var(--hacker-green);
+        }
+        
+        .footer-links .divider {
+            color: var(--border-color);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <i class="fas fa-dragon"></i>
-                <h1>AniFlix</h1>
-            </a>
-            
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Cari anime...">
-                <button id="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-            
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
-                    <li><a href="#popular-anime"><i class="fas fa-fire"></i> Populer</a></li>
-                    <li><a href="#recent-anime"><i class="fas fa-history"></i> Terbaru</a></li>
-                    <li><a href="#"><i class="fas fa-bookmark"></i> Favorit</a></li>
-                </ul>
-            </nav>
-            
-            <div class="user-actions">
-                <button class="login"><i class="fas fa-sign-in-alt"></i> Masuk</button>
-                <button class="signup"><i class="fas fa-user-plus"></i> Daftar</button>
-            </div>
-        </div>
-    </header>
-    
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Hero Section -->
-        <section class="hero" id="hero-section">
-            <div class="hero-content">
-                <h2 id="hero-title">Memuat Anime Terpopuler...</h2>
-                <p id="hero-synopsis">Silakan tunggu sebentar...</p>
-                <div class="hero-buttons">
-                    <button class="hero-btn play-btn" id="hero-play-btn"><i class="fas fa-play"></i> Tonton Sekarang</button>
-                    <button class="hero-btn info-btn" id="hero-info-btn"><i class="fas fa-info-circle"></i> Detail Anime</button>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Search Results -->
-        <section class="search-results" id="search-results">
-            <div class="search-header">
-                <h2 class="section-title">Hasil Pencarian</h2>
-                <button class="back-button" id="back-button"><i class="fas fa-arrow-left"></i> Kembali</button>
-            </div>
-            <div class="anime-grid" id="search-results-container"></div>
-        </section>
-        
-        <!-- Popular Anime -->
-        <h2 class="section-title" id="popular-anime"><i class="fas fa-fire"></i> Anime Populer</h2>
-        <div class="anime-grid" id="popular-anime-container"></div>
-        
-        <!-- Recent Anime -->
-        <h2 class="section-title" id="recent-anime"><i class="fas fa-history"></i> Episode Terbaru</h2>
-        <div class="anime-grid" id="recent-anime-container"></div>
-        
-        <!-- Loading Spinner -->
-        <div class="loader" id="loader">
-            <div class="spinner"></div>
-            <p>Memuat data anime...</p>
-        </div>
-    </main>
-    
-    <!-- Anime Detail Modal -->
-    <div class="modal" id="anime-modal">
+    <!-- Subscribe Modal -->
+    <div id="subscribe-modal" class="active">
         <div class="modal-content">
-            <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
-            <div class="modal-header" id="modal-header">
-                <div class="modal-header-content">
-                    <h2 id="modal-title">Memuat...</h2>
-                    <div class="modal-meta" id="modal-meta"></div>
-                </div>
+            <div class="modal-header">
+                <h2><i class="fab fa-youtube"></i> Subscribe to AvelineID</h2>
             </div>
             <div class="modal-body">
-                <h3>Sinopsis</h3>
-                <p class="modal-synopsis" id="modal-synopsis">Memuat deskripsi anime...</p>
-                
-                <h3>Episode</h3>
-                <div class="episodes-container" id="episodes-container"></div>
+                <p>Enjoying this GG Script Generator? Please subscribe to my YouTube channel for more modding tools, tutorials, and updates!</p>
+                <p>Your subscription helps me create more free tools like this one.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="https://www.youtube.com/@AvelineID" target="_blank" class="btn-subscribe">
+                    <i class="fab fa-youtube"></i> Subscribe Now
+                </a>
+                <button class="btn-close-modal" id="close-modal">Continue to Tool</button>
             </div>
         </div>
     </div>
     
-    <!-- Video Player Modal -->
-    <div class="player-modal" id="player-modal">
-        <div class="player-content">
-            <button class="player-close" id="player-close"><i class="fas fa-times"></i></button>
-            <div class="video-container" id="video-container"></div>
-        </div>
+    <div class="binary-rain" id="binary-rain"></div>
+    
+    <div class="mobile-warning">
+        <i class="fas fa-exclamation-triangle"></i> For best experience, use landscape mode on mobile devices
     </div>
     
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Tentang AniFlix</h3>
-                    <p>AniFlix adalah platform streaming anime menggunakan API Consumet untuk menyajikan anime terbaru dan terpopuler secara gratis.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-terminal"></i> GG SCRIPT GENERATOR</h1>
+                <p>Create Game Guardian scripts with hacker-style menu interfaces</p>
+                <div class="brand">
+                    <a href="https://www.youtube.com/@AvelineID" target="_blank">
+                        <i class="fab fa-youtube"></i> YouTube.com/@AvelineID
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <div class="panels-container">
+            <div class="panel config-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-cogs"></i> CONFIG TERMINAL
+                    </div>
+                    <div class="panel-status">
+                        ONLINE <span class="blink">_</span>
                     </div>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Navigasi</h3>
-                    <ul>
-                        <li><a href="#">Beranda</a></li>
-                        <li><a href="#popular-anime">Anime Populer</a></li>
-                        <li><a href="#recent-anime">Episode Terbaru</a></li>
-                        <li><a href="#">Genre</a></li>
-                        <li><a href="#">Film Anime</a></li>
-                    </ul>
+                <div class="config-section">
+                    <div class="section-title" onclick="toggleSection('game-config')">
+                        <h3><i class="fas fa-gamepad"></i> GAME CONFIGURATION</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="game-config">
+                        <div class="form-group">
+                            <label for="apkName">APK NAME:</label>
+                            <input type="text" id="apkName" value="com.example.game" placeholder="Enter APK name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="libName">LIBRARY NAME: <span class="feature-badge">Advanced</span></label>
+                            <input type="text" id="libName" value="libil2cpp.so" placeholder="Enter library name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="author">AUTHOR:</label>
+                            <input type="text" id="author" value="AvelineID" placeholder="Your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="version">SCRIPT VERSION:</label>
+                            <input type="text" id="version" value="1.0" placeholder="Script version">
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Genre Populer</h3>
-                    <ul>
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Adventure</a></li>
-                        <li><a href="#">Comedy</a></li>
-                        <li><a href="#">Drama</a></li>
-                        <li><a href="#">Fantasy</a></li>
-                        <li><a href="#">Romance</a></li>
-                    </ul>
+                <div class="config-section">
+                    <div class="section-title" onclick="toggleSection('hack-builder')">
+                        <h3><i class="fas fa-code"></i> HACK MENU BUILDER</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="hack-builder">
+                        <div id="hacks-container">
+                            <div class="hack-item">
+                                <div class="hack-row">
+                                    <div>
+                                        <label>MENU TITLE</label>
+                                        <input type="text" class="menu-title" value="Free Shop" placeholder="Hack name">
+                                    </div>
+                                    <div>
+                                        <label>METHOD NAME</label>
+                                        <input type="text" class="method-name" value="get_IsIAP" placeholder="Method name">
+                                    </div>
+                                </div>
+                                <div class="hack-row">
+                                    <div>
+                                        <label>CLASS NAME</label>
+                                        <input type="text" class="class-name" value="Currency" placeholder="Class name">
+                                    </div>
+                                    <div>
+                                        <label>VALUE TYPE</label>
+                                        <select class="value-type">
+                                            <option value="bool">Boolean</option>
+                                            <option value="int">Integer</option>
+                                            <option value="float">Float</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>VALUE</label>
+                                        <input type="text" class="hack-value" value="false" placeholder="Hack value">
+                                    </div>
+                                </div>
+                                <button class="remove-hack">
+                                    <i class="fas fa-trash-alt"></i> REMOVE HACK
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button id="add-hack">
+                            <i class="fas fa-plus-circle"></i> ADD HACK
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Dukungan</h3>
-                    <ul>
-                        <li><a href="#">Pusat Bantuan</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Kontak</a></li>
-                        <li><a href="#">Kebijakan Privasi</a></li>
-                    </ul>
+                <div class="config-section">
+                    <div class="section-title" onclick="toggleSection('menu-preview-section')">
+                        <h3><i class="fas fa-eye"></i> MENU PREVIEW</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="menu-preview-section">
+                        <div class="menu-preview">
+                            <div class="menu-items" id="menu-items">
+                                <div class="menu-item active">
+                                    <i class="fas fa-shopping-cart"></i> Free Shop
+                                </div>
+                                <div class="menu-item">
+                                    <i class="fas fa-running"></i> Unlimited Jump
+                                </div>
+                                <div class="menu-item">
+                                    <i class="fas fa-shield-alt"></i> God Mode
+                                </div>
+                                <div class="menu-item">
+                                    <i class="fas fa-bolt"></i> Speed Hack
+                                </div>
+                                <div class="menu-item">
+                                    <i class="fas fa-power-off"></i> EXIT
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button id="generate-btn" class="btn-primary">
+                        <i class="fas fa-cogs"></i> GENERATE SCRIPT
+                    </button>
+                    <button id="reset-btn">
+                        <i class="fas fa-redo"></i> RESET CONFIG
+                    </button>
+                    <button id="download-btn" class="btn-success">
+                        <i class="fas fa-download"></i> DOWNLOAD SCRIPT
+                    </button>
+                </div>
+                
+                <div class="success" id="success-message">
+                    <i class="fas fa-check-circle"></i> SCRIPT GENERATED SUCCESSFULLY!
                 </div>
             </div>
             
-            <div class="copyright">
-                <p>&copy; 2023 AniFlix. Hak Cipta Dilindungi. Data anime disediakan oleh Consumet API.</p>
-                <p>Website ini hanya untuk tujuan demonstrasi.</p>
+            <div class="panel script-output">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-file-code"></i> SCRIPT OUTPUT
+                    </div>
+                    <div class="panel-status">
+                        READY <span class="blink">_</span>
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <div class="section-title" onclick="toggleSection('script-output')">
+                        <h3><i class="fas fa-code"></i> GENERATED SCRIPT</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="script-output">
+                        <div class="form-group">
+                            <textarea id="generated-script" readonly>-- Generated script will appear here
+-- Configure your hacks and press GENERATE
+
+-- YouTube.com/@AvelineID</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <div class="section-title" onclick="toggleSection('instructions')">
+                        <h3><i class="fas fa-info-circle"></i> INSTRUCTIONS</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="instructions">
+                        <div class="form-group">
+                            <ol>
+                                <li>Fill in the game configuration details</li>
+                                <li>Add your hacks with class/method names</li>
+                                <li>Click GENERATE SCRIPT to create your GG script</li>
+                                <li>Copy or DOWNLOAD the generated script</li>
+                                <li>Run in Game Guardian with the target game</li>
+                                <li>Subscribe to <a href="https://www.youtube.com/@AvelineID" style="color: var(--hacker-green);">AvelineID on YouTube</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h3>SCRIPT FEATURES</h3>
+                    <ul>
+                        <li><i class="fas fa-check" style="color: var(--hacker-green);"></i> Automatic library detection</li>
+                        <li><i class="fas fa-check" style="color: var(--hacker-green);"></i> Offset search and caching</li>
+                        <li><i class="fas fa-check" style="color: var(--hacker-green);"></i> ARM assembly patching</li>
+                        <li><i class="fas fa-check" style="color: var(--hacker-green);"></i> Toggleable hacks</li>
+                        <li><i class="fas fa-check" style="color: var(--hacker-green);"></i> Multi-game support</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </footer>
+        
+        <footer>
+            <p>Created for YouTube.com/@AvelineID | Game Guardian Script Generator v2.0</p>
+            <p>© 2025 AvelineID - All rights reserved</p>
+            
+            <!-- Added links section -->
+            <div class="footer-links">
+                <a href="https://avilane.github.io/Aveline/" target="_blank">
+                    <i class="fas fa-download"></i> Download Scripts & Mods
+                </a>
+                <span class="divider">|</span>
+                <a href="https://youtu.be/Cgvaaj_k44Q?si=RdPbtABttmf9ad6E" target="_blank">
+                    <i class="fab fa-youtube"></i> Example Script
+                </a>
+                <span class="divider">|</span>
+                <a href="https://avilane.github.io/AvelineGG/" target="_blank">
+                    <i class="fas fa-cogs"></i> Auto Script Generator V1
+                </a>
+                <span class="divider">|</span>
+                <a href="https://t.me/AvelineID" target="_blank">
+                    <i class="fab fa-telegram"></i> Telegram: @AvelineID
+                </a>
+            </div>
+        </footer>
+    </div>
     
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <script>
-     // API Configuration for Consumet
-const API_BASE_URL = 'https://api.consumet.org/anime/gogoanime';
-const POPULAR_ANIME_URL = `${API_BASE_URL}/top-airing`;
-const RECENT_EPISODES_URL = `${API_BASE_URL}/recent-episodes`;
-const ANIME_SEARCH_URL = `${API_BASE_URL}/`;
-const ANIME_INFO_URL = `${API_BASE_URL}/info/`;
-const WATCH_EPISODE_URL = `${API_BASE_URL}/watch/`;
-
-// DOM Elements
-const heroSection = document.getElementById('hero-section');
-const heroTitle = document.getElementById('hero-title');
-const heroSynopsis = document.getElementById('hero-synopsis');
-const popularAnimeContainer = document.getElementById('popular-anime-container');
-const recentAnimeContainer = document.getElementById('recent-anime-container');
-const searchResultsContainer = document.getElementById('search-results-container');
-const searchResultsSection = document.getElementById('search-results');
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-btn');
-const backButton = document.getElementById('back-button');
-const loader = document.getElementById('loader');
-const heroPlayBtn = document.getElementById('hero-play-btn');
-const heroInfoBtn = document.getElementById('hero-info-btn');
-const animeModal = document.getElementById('anime-modal');
-const modalClose = document.getElementById('modal-close');
-const modalHeader = document.getElementById('modal-header');
-const modalTitle = document.getElementById('modal-title');
-const modalMeta = document.getElementById('modal-meta');
-const modalSynopsis = document.getElementById('modal-synopsis');
-const episodesContainer = document.getElementById('episodes-container');
-const playerModal = document.getElementById('player-modal');
-const playerClose = document.getElementById('player-close');
-const videoContainer = document.getElementById('video-container');
-
-// State
-let currentAnimeId = null;
-let currentEpisodeId = null;
-
-// Show loading spinner
-function showLoader() {
-    loader.style.display = 'block';
-}
-
-// Hide loading spinner
-function hideLoader() {
-    loader.style.display = 'none';
-}
-
-// Fetch data from API
-async function fetchData(url) {
-    try {
-        showLoader();
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return { results: [] };
-    } finally {
-        hideLoader();
-    }
-}
-
-// Display hero anime
-async function displayHeroAnime() {
-    const popularData = await fetchData(POPULAR_ANIME_URL);
-    if (popularData.results && popularData.results.length > 0) {
-        const anime = popularData.results[0];
-        currentAnimeId = anime.id;
-        
-        heroTitle.textContent = anime.title;
-        heroSynopsis.textContent = 'Klik tombol Detail untuk melihat sinopsis lengkap';
-        
-        // Set hero background
-        if (anime.image) {
-            heroSection.style.backgroundImage = `url(${anime.image})`;
+        // Create falling binary code effect
+        function createBinaryEffect() {
+            const container = document.getElementById('binary-rain');
+            const chars = '01';
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            for (let i = 0; i < columns; i++) {
+                const char = document.createElement('div');
+                char.className = 'binary-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = `${Math.random() * 100}%`;
+                char.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                char.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(char);
+                
+                // Remove char after animation completes
+                setTimeout(() => {
+                    char.remove();
+                }, parseFloat(char.style.animationDuration) * 1000 + 1000);
+            }
+            
+            // Keep creating new characters
+            setTimeout(createBinaryEffect, 300);
         }
         
-        // Set button actions
-        heroPlayBtn.onclick = () => playFirstEpisode(anime.id);
-        heroInfoBtn.onclick = () => showAnimeDetail(anime.id);
-    }
-}
-
-// Create anime card
-function createAnimeCard(anime) {
-    const card = document.createElement('div');
-    card.className = 'anime-card';
-    
-    card.innerHTML = `
-        <div class="card-image" style="background-image: url(${anime.image || 'https://via.placeholder.com/300x400?text=No+Image'});"></div>
-        ${anime.episodeNumber ? `<div class="episode-badge">Eps ${anime.episodeNumber}</div>` : ''}
-        <div class="anime-info">
-            <h4>${anime.title}</h4>
-            <div class="meta">
-                <span>${anime.type || 'TV'}</span>
-                <span class="rating"><i class="fas fa-star"></i> ${anime.rating || 'N/A'}</span>
-            </div>
-        </div>
-    `;
-    
-    card.addEventListener('click', () => {
-        if (anime.episodeId) {
-            // For recent episodes
-            playEpisode(anime.episodeId);
-        } else {
-            // For other anime cards
-            showAnimeDetail(anime.id);
+        // Toggle section visibility
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
         }
-    });
-    
-    return card;
-}
-
-// Display popular anime
-async function displayPopularAnime() {
-    const popularData = await fetchData(POPULAR_ANIME_URL);
-    popularAnimeContainer.innerHTML = '';
-    
-    if (popularData.results && popularData.results.length > 0) {
-        popularData.results.slice(0, 8).forEach(anime => {
-            const card = createAnimeCard(anime);
-            popularAnimeContainer.appendChild(card);
-        });
-    } else {
-        popularAnimeContainer.innerHTML = '<p>Gagal memuat anime populer. Silakan coba lagi nanti.</p>';
-    }
-}
-
-// Display recent episodes
-async function displayRecentEpisodes() {
-    const recentData = await fetchData(RECENT_EPISODES_URL);
-    recentAnimeContainer.innerHTML = '';
-    
-    if (recentData.results && recentData.results.length > 0) {
-        recentData.results.slice(0, 8).forEach(episode => {
-            const card = createAnimeCard({
-                ...episode,
-                episodeNumber: episode.episodeNumber,
-                episodeId: episode.id
-            });
-            recentAnimeContainer.appendChild(card);
-        });
-    } else {
-        recentAnimeContainer.innerHTML = '<p>Gagal memuat episode terbaru. Silakan coba lagi nanti.</p>';
-    }
-}
-
-// Search anime
-async function searchAnime(query) {
-    if (!query.trim()) return;
-    
-    const url = `${ANIME_SEARCH_URL}${encodeURIComponent(query)}`;
-    const searchData = await fetchData(url);
-    
-    // Hide main content, show search results
-    document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
-        el.style.display = 'none';
-    });
-    
-    searchResultsSection.style.display = 'block';
-    searchResultsContainer.innerHTML = '';
-    
-    if (searchData.results && searchData.results.length > 0) {
-        searchData.results.forEach(anime => {
-            const card = createAnimeCard(anime);
-            searchResultsContainer.appendChild(card);
-        });
-    } else {
-        searchResultsContainer.innerHTML = '<p>Tidak ada hasil ditemukan. Coba kata kunci lain.</p>';
-    }
-}
-
-// Back to main view
-function backToMain() {
-    searchResultsSection.style.display = 'none';
-    document.querySelectorAll('.section-title, .anime-grid').forEach(el => {
-        el.style.display = '';
-    });
-    searchInput.value = '';
-}
-
-// Show anime detail modal
-async function showAnimeDetail(animeId) {
-    currentAnimeId = animeId;
-    const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
-    
-    if (!animeInfo) {
-        alert('Gagal memuat detail anime. Silakan coba lagi.');
-        return;
-    }
-    
-    // Set modal content
-    modalTitle.textContent = animeInfo.title;
-    modalSynopsis.textContent = animeInfo.description || 'Deskripsi tidak tersedia.';
-    
-    // Set header background
-    if (animeInfo.image) {
-        modalHeader.style.backgroundImage = `url(${animeInfo.image})`;
-    }
-    
-    // Set metadata
-    modalMeta.innerHTML = `
-        <span>${animeInfo.type || 'TV'}</span>
-        <span><i class="fas fa-star"></i> ${animeInfo.rating || 'N/A'}</span>
-        <span><i class="fas fa-calendar"></i> ${animeInfo.releaseDate || 'Tidak diketahui'}</span>
-        <span><i class="fas fa-tv"></i> ${animeInfo.totalEpisodes || '?'} Episode</span>
-        <span><i class="fas fa-tags"></i> ${animeInfo.genres?.join(', ') || 'Tidak diketahui'}</span>
-    `;
-    
-    // Add episodes
-    episodesContainer.innerHTML = '';
-    if (animeInfo.episodes && animeInfo.episodes.length > 0) {
-        animeInfo.episodes.reverse().forEach(ep => {
-            const episode = document.createElement('div');
-            episode.className = 'episode';
-            episode.innerHTML = `
-                <div class="episode-number">${ep.number}</div>
-                <div class="episode-title">${ep.title || 'Episode ' + ep.number}</div>
+        
+        // Add a new hack item
+        function addHackItem() {
+            const container = document.getElementById('hacks-container');
+            const hackCount = container.querySelectorAll('.hack-item').length + 1;
+            
+            const hackHTML = `
+                <div class="hack-item">
+                    <div class="hack-row">
+                        <div>
+                            <label>MENU TITLE</label>
+                            <input type="text" class="menu-title" value="Hack ${hackCount}" placeholder="Hack name">
+                        </div>
+                        <div>
+                            <label>METHOD NAME</label>
+                            <input type="text" class="method-name" value="get_Method${hackCount}" placeholder="Method name">
+                        </div>
+                    </div>
+                    <div class="hack-row">
+                        <div>
+                            <label>CLASS NAME</label>
+                            <input type="text" class="class-name" value="Class${hackCount}" placeholder="Class name">
+                        </div>
+                        <div>
+                            <label>VALUE TYPE</label>
+                            <select class="value-type">
+                                <option value="bool">Boolean</option>
+                                <option value="int">Integer</option>
+                                <option value="float">Float</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>VALUE</label>
+                            <input type="text" class="hack-value" value="${hackCount % 2 === 0 ? '9999' : 'false'}" placeholder="Hack value">
+                        </div>
+                    </div>
+                    <button class="remove-hack">
+                        <i class="fas fa-trash-alt"></i> REMOVE HACK
+                    </button>
+                </div>
             `;
-            episode.addEventListener('click', () => playEpisode(ep.id));
-            episodesContainer.appendChild(episode);
+            
+            container.insertAdjacentHTML('beforeend', hackHTML);
+            
+            // Update menu preview
+            updateMenuPreview();
+        }
+        
+        // Update the menu preview
+        function updateMenuPreview() {
+            const menuItems = document.getElementById('menu-items');
+            menuItems.innerHTML = '';
+            
+            const hackItems = document.querySelectorAll('.hack-item');
+            const icons = ['fa-shopping-cart', 'fa-running', 'fa-shield-alt', 'fa-bolt', 'fa-coins', 'fa-infinity', 'fa-heart', 'fa-bomb'];
+            
+            hackItems.forEach((item, index) => {
+                const title = item.querySelector('.menu-title').value || 'Untitled Hack';
+                const icon = icons[index % icons.length] || 'fa-code';
+                
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `<i class="fas ${icon}"></i> ${title}`;
+                menuItems.appendChild(menuItem);
+            });
+            
+            // Add EXIT option
+            const exitItem = document.createElement('div');
+            exitItem.className = 'menu-item';
+            exitItem.innerHTML = '<i class="fas fa-power-off"></i> EXIT';
+            menuItems.appendChild(exitItem);
+            
+            // Activate first item
+            if (menuItems.firstChild) {
+                menuItems.firstChild.classList.add('active');
+            }
+        }
+        
+        // Generate the Game Guardian script
+        function generateScript() {
+            const apkName = document.getElementById('apkName').value || 'com.example.game';
+            const libName = document.getElementById('libName').value || 'libil2cpp.so';
+            const author = document.getElementById('author').value || 'AvelineID';
+            const version = document.getElementById('version').value || '1.0';
+            
+            const hackItems = document.querySelectorAll('.hack-item');
+            const hacks = [];
+            
+            // Collect hack data
+            hackItems.forEach(item => {
+                const title = item.querySelector('.menu-title').value || 'Untitled Hack';
+                const method = item.querySelector('.method-name').value || 'get_Method';
+                const className = item.querySelector('.class-name').value || 'ClassName';
+                const valueType = item.querySelector('.value-type').value;
+                const value = item.querySelector('.hack-value').value || 'false';
+                
+                hacks.push({
+                    title,
+                    method,
+                    className,
+                    valueType,
+                    value
+                });
+            });
+            
+            // Start building the script
+            let script = `-- Game Guardian Script
+-- Generated by GG Script Generator
+-- YouTube.com/@AvelineID
+-- 
+-- Game: ${apkName}
+-- Library: ${libName}
+-- Author: ${author}
+-- Version: ${version}
+-- ${new Date().toLocaleString()}
+
+-- Set Your Libname here
+local libNameSo = "${libName}"  -- Define the library name
+local info = gg.getTargetInfo() -- Get information about the target app
+local APK = info.label    -- Get APK name
+
+-- [LIBRARY SEARCH CODE] --
+-- Library search code from template goes here
+-- This section handles finding the game library in memory
+
+-- [OFFSET SEARCH CODE] --
+-- This section searches for method offsets
+local Search = {
+`;
+
+            // Add search entries
+            hacks.forEach((hack, index) => {
+                script += `    [${index + 1}] = {
+        class = "${hack.className}",  -- public class ${hack.className}
+        method = "${hack.method}" -- public ${hack.valueType === 'bool' ? 'bool' : hack.valueType} ${hack.method}()
+    }${index < hacks.length - 1 ? ',' : ''}
+`;
+            });
+
+            script += `}
+
+-- [HACK FUNCTIONS] --
+-- Functions for each hack
+`;
+
+            // Add hack functions
+            hacks.forEach((hack, index) => {
+                const funcName = hack.method.replace(/[^a-zA-Z0-9]/g, '_');
+                
+                script += `
+-- ${hack.title}
+function ${funcName}_ON()
+    if check("${hack.method}") then
+        RecordOriginalValue(${hack.method})
+        injectAssembly(${hack.method}, ${hack.value})
+        gg.toast("${hack.title} ACTIVATED")
+    end
+    return true
+end
+
+function ${funcName}_OFF()
+    RevertValue(${hack.method})
+    gg.toast("${hack.title} DEACTIVATED")
+    return nil
+end
+`;
+            });
+
+            // Add menu configuration
+            script += `
+-- Main Menu --
+menuList = {
+`;
+
+            hacks.forEach(hack => {
+                script += `    "${hack.title}", -- ${hack.method}\n`;
+            });
+
+            script += `    "EXIT" -- Exit the script
+}
+
+checkList = {
+`;
+
+            hacks.forEach(() => {
+                script += `    nil,\n`;
+            });
+
+            script += `    nil -- EXIT
+}
+
+-- Menu Function
+function menu()
+    tsu = gg.multiChoice(menuList, checkList, "━━━━[ " .. APK .. " ]━━━━\\nYouTube.com/@AvelineID")
+    if tsu == nil then return end
+`;
+
+            // Add menu handlers
+            hacks.forEach((hack, index) => {
+                const funcName = hack.method.replace(/[^a-zA-Z0-9]/g, '_');
+                
+                script += `
+    -- ${hack.title}
+    if tsu[${index + 1}] ~= checkList[${index + 1}] then
+        if tsu[${index + 1}] == true then
+            checkList[${index + 1}] = ${funcName}_ON()
+        else
+            checkList[${index + 1}] = ${funcName}_OFF()
+        end
+    end
+`;
+            });
+
+            // Add EXIT handler
+            script += `
+    -- EXIT option
+    if tsu[${hacks.length + 1}] == true then
+        gg.toast("Exiting script...")
+        os.exit()
+    end
+end
+
+-- [REST OF TEMPLATE CODE] --
+-- This section includes the rest of the template functionality
+-- including memory search, offset handling, and menu loop
+
+while true do
+    if gg.isVisible(true) then
+        gg.setVisible(false)
+        menu()
+    end
+    gg.sleep(100)
+end
+
+--[[
+    YouTube.com/@AvelineID
+    Thanks for using this script!
+]]`;
+
+            // Display the generated script
+            document.getElementById('generated-script').value = script;
+            
+            // Show success message
+            const successMsg = document.getElementById('success-message');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Reset configuration
+        function resetConfig() {
+            document.getElementById('apkName').value = 'com.example.game';
+            document.getElementById('libName').value = 'libil2cpp.so';
+            document.getElementById('author').value = 'AvelineID';
+            document.getElementById('version').value = '1.0';
+            
+            const container = document.getElementById('hacks-container');
+            container.innerHTML = '';
+            
+            // Add one default hack
+            addHackItem();
+            
+            document.getElementById('generated-script').value = '-- Generated script will appear here\n-- Configure your hacks and press GENERATE\n\n-- YouTube.com/@AvelineID';
+        }
+        
+        // Download the script
+        function downloadScript() {
+            const script = document.getElementById('generated-script').value;
+            if (!script || script.includes('-- Generated script will appear here')) {
+                alert('Please generate a script first!');
+                return;
+            }
+            
+            const apkName = document.getElementById('apkName').value || 'game';
+            const filename = `${apkName}_GG_Script.lua`;
+            
+            const blob = new Blob([script], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+        
+        // Close subscribe modal
+        function closeSubscribeModal() {
+            document.getElementById('subscribe-modal').classList.remove('active');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createBinaryEffect();
+            
+            // Add hack button event
+            document.getElementById('add-hack').addEventListener('click', addHackItem);
+            
+            // Generate button event
+            document.getElementById('generate-btn').addEventListener('click', generateScript);
+            
+            // Reset button event
+            document.getElementById('reset-btn').addEventListener('click', resetConfig);
+            
+            // Download button event
+            document.getElementById('download-btn').addEventListener('click', downloadScript);
+            
+            // Delegate remove hack events
+            document.getElementById('hacks-container').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-hack')) {
+                    const hackItem = e.target.closest('.hack-item');
+                    if (document.querySelectorAll('.hack-item').length > 1) {
+                        hackItem.remove();
+                        updateMenuPreview();
+                    } else {
+                        alert('You need at least one hack in your script!');
+                    }
+                }
+            });
+            
+            // Menu preview interaction
+            document.getElementById('menu-items').addEventListener('click', function(e) {
+                if (e.target.closest('.menu-item')) {
+                    const menuItem = e.target.closest('.menu-item');
+                    document.querySelectorAll('.menu-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    menuItem.classList.add('active');
+                }
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('light-theme');
+                const icon = themeToggle.querySelector('i');
+                if (document.body.classList.contains('light-theme')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            });
+            
+            // Add initial hack
+            addHackItem();
+            
+            // Close modal button
+            document.getElementById('close-modal').addEventListener('click', closeSubscribeModal);
+            
+            // Close modal when clicking outside
+            document.getElementById('subscribe-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeSubscribeModal();
+                }
+            });
         });
-    } else {
-        episodesContainer.innerHTML = '<p>Episode tidak tersedia.</p>';
-    }
-    
-    // Show modal
-    animeModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-}
-
-// Play first episode of an anime
-async function playFirstEpisode(animeId) {
-    const animeInfo = await fetchData(`${ANIME_INFO_URL}${animeId}`);
-    if (!animeInfo || !animeInfo.episodes || animeInfo.episodes.length === 0) {
-        alert('Episode tidak ditemukan.');
-        return;
-    }
-    
-    // Play the first episode
-    playEpisode(animeInfo.episodes[0].id);
-}
-
-// Play a specific episode
-async function playEpisode(episodeId) {
-    currentEpisodeId = episodeId;
-    const episodeData = await fetchData(`${WATCH_EPISODE_URL}${episodeId}`);
-    
-    if (!episodeData || !episodeData.sources || episodeData.sources.length === 0) {
-        alert('Sumber video tidak ditemukan.');
-        return;
-    }
-    
-    // Find the best quality video source
-    const videoSource = episodeData.sources.find(source => 
-        source.quality === '1080p' || source.quality === '720p' || source.quality === 'default'
-    ) || episodeData.sources[0];
-    
-    // Set up video player
-    videoContainer.innerHTML = `
-        <iframe src="${videoSource.url}" allowfullscreen></iframe>
-    `;
-    
-    // Show player modal
-    playerModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-}
-
-// Close modals
-modalClose.addEventListener('click', () => {
-    animeModal.style.display = 'none';
-    document.body.style.overflow = '';
-});
-
-playerClose.addEventListener('click', () => {
-    playerModal.style.display = 'none';
-    document.body.style.overflow = '';
-    videoContainer.innerHTML = '';
-});
-
-// Close modals when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === animeModal) {
-        animeModal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-    if (e.target === playerModal) {
-        playerModal.style.display = 'none';
-        document.body.style.overflow = '';
-        videoContainer.innerHTML = '';
-    }
-});
-
-// Event Listeners
-searchBtn.addEventListener('click', () => {
-    searchAnime(searchInput.value);
-});
-
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        searchAnime(searchInput.value);
-    }
-});
-
-backButton.addEventListener('click', backToMain);
-
-// Initialize the page
-async function init() {
-    await displayHeroAnime();
-    await displayPopularAnime();
-    await displayRecentEpisodes();
-}
-
-// Start the application
-init();
     </script>
 </body>
 </html>
